@@ -57,10 +57,10 @@ def load_data(n_labeled, batch_size=64):
         y_labeled.append(y_masked[:n_labeled_class])
         y_unlabeled.append(y_masked[n_labeled_class:])
 
-    labeled_dataset.train_data = torch.cat(x_labeled)
-    labeled_dataset.train_labels = torch.cat(y_labeled)
-    unlabeled_dataset.train_data = torch.cat(x_unlabeled)
-    unlabeled_dataset.train_labels = torch.cat(y_unlabeled)
+    train_labeled.train_data = torch.cat(x_labeled)
+    train_labeled.train_labels = torch.cat(y_labeled)
+    train_unlabeled.train_data = torch.cat(x_unlabeled)
+    train_unlabeled.train_labels = torch.cat(y_unlabeled)
 
     dl_train_labeled = torch.utils.data.DataLoader(train_labeled, batch_size=batch_size, shuffle=True)
     dl_train_unlabeled = torch.utils.data.DataLoader(train_unlabeled, batch_size=batch_size, shuffle=True)
@@ -79,7 +79,7 @@ def main():
     dl_train_labeled, dl_train_unlabeled, dl_test = load_data()
     
     model = MODELS[args.model]()
-    TRAINING[args.model](model, dl_train_labeled, dl_train_unlabeled, dl_test)
+    TRAINING[args.model](model, dl_train_labeled, dl_train_unlabeled, dl_test, device=DEVICE)
     
 
 

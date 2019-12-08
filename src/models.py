@@ -11,6 +11,12 @@ HIDDEN_DIM2 = 500
 INIT_VAR = 0.001
 
 
+def ohe_convert(y):
+    res = torch.zeros(len(y), Y_DIM)
+    res[torch.arange(len(y)), x.squeeze()] = 1
+    return res.to(y.device)
+
+
 class M1(nn.Module):
     def __init__(self, device):
         super().__init__()
@@ -96,7 +102,7 @@ class M2(nn.Module):
 
     def forward(self, x):
         probs = self.encode_y(x).probs
-        return 
+        return probs.max(dim=1)[1]
 
 
     def encode_y(self, x):
